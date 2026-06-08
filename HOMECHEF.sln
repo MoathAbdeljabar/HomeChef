@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37203.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeChef.API", "HomeChef.API\HomeChef.API.csproj", "{6C62B1AF-B443-4356-852E-514B7DE301F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeChef.Application", "HomeChef.Application\HomeChef.Application.csproj", "{CF2AEAF6-5E5B-490D-9CC2-387BBCA7B4E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeChef.Data", "HomeChef.Data\HomeChef.Data.csproj", "{35F15E42-3894-41E2-8BFB-C0406F0D4317}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeChef.Domain", "HomeChef.Domain\HomeChef.Domain.csproj", "{B510D3D0-C99E-40CA-B84F-19A3365BBCE1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		guide.txt = guide.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6C62B1AF-B443-4356-852E-514B7DE301F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C62B1AF-B443-4356-852E-514B7DE301F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C62B1AF-B443-4356-852E-514B7DE301F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C62B1AF-B443-4356-852E-514B7DE301F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF2AEAF6-5E5B-490D-9CC2-387BBCA7B4E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF2AEAF6-5E5B-490D-9CC2-387BBCA7B4E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF2AEAF6-5E5B-490D-9CC2-387BBCA7B4E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF2AEAF6-5E5B-490D-9CC2-387BBCA7B4E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35F15E42-3894-41E2-8BFB-C0406F0D4317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35F15E42-3894-41E2-8BFB-C0406F0D4317}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35F15E42-3894-41E2-8BFB-C0406F0D4317}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35F15E42-3894-41E2-8BFB-C0406F0D4317}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B510D3D0-C99E-40CA-B84F-19A3365BBCE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B510D3D0-C99E-40CA-B84F-19A3365BBCE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B510D3D0-C99E-40CA-B84F-19A3365BBCE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B510D3D0-C99E-40CA-B84F-19A3365BBCE1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB9AFED0-B9EF-4A65-A0E4-3F972950D6C1}
+	EndGlobalSection
+EndGlobal

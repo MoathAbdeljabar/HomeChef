@@ -1,0 +1,151 @@
+1- (4) Projects created
+-- API
+	reference
+-- Application
+	reference
+-- Data
+	reference
+-- Domain
+
+
+Data Project PKGs
+-- Microsoft.EntityFrameworkCore  
+-- Microsoft.EntityFrameworkCore.Design
+-- Microsoft.EntityFrameworkCore.Tools
+-- Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+
+2- Add the connection string to the appsettings.json
+
+3- Data --> Models --> ApplicationUser : IdentityUser
+4- Data --> ApplicationDbContext 
+5- Data --> ApplicationDbContextFactory
+6- Domain -> Enums
+7- API 
+	<ItemGroup>
+		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="10.0.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="10.0.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0" />
+	</ItemGroup>
+
+8- Program.cs
+9- add-migration, update-database
+
+
+
+
+---------------------
+Sign Up
+---------------------
+1- Application --> Shared --> ServiceResult, BusinessErrorType
+2- Application --> Auth --> DTOs	, Interfaces, Services
+3- API -> Helpers -> ResponseHelper
+4- AuthController
+
+
+
+
+
+
+
+
+
+Sign in
+[HttpPost("login")]
+public async Task<IActionResult> Login([FromBody] LoginDto dto)
+{
+    // This check will fail if phone isn't confirmed
+    var user = await _userManager.FindByEmailAsync(dto.Email);
+    
+    // When RequireConfirmedPhoneNumber = true, this returns false
+    var canSignIn = await _signInManager.CanSignInAsync(user);
+    
+    if (!canSignIn)
+        return Unauthorized("Phone number not confirmed");
+
+    // If you check this way, it blocks JWT creation
+    var result = await _signInManager.PasswordSignInAsync(dto.Email, dto.Password);
+    if (!result.Succeeded) // Will fail if phone not confirmed
+        return Unauthorized();
+    
+    // Token generation code won't execute
+    var token = GenerateJwtToken(user);
+}
+
+
+[HttpPost("login")]
+public async Task<IActionResult> Login([FromBody] LoginDto dto)
+{
+    // dto.PhoneNumber is the login identifier
+    var user = await _userManager.FindByNameAsync(dto.PhoneNumber);
+    
+    if (user == null)
+        return Unauthorized("Invalid phone number or password");
+
+    // Check password
+    if (!await _userManager.CheckPasswordAsync(user, dto.Password))
+        return Unauthorized("Invalid phone number or password");
+
+    // Manual phone confirmation check
+    if (user.PhoneNumberConfirmed == false)
+    {
+        return Unauthorized(new 
+        { 
+            requiresPhoneConfirmation = true,
+            message = "Phone number must be confirmed before login"
+        });
+    }
+
+    // Generate JWT token
+    var token = await GenerateJwtTokenAsync(user);
+    return Ok(new { token, user = new { user.PhoneNumber, user.Id } });
+}
+
+
+
+
+
+
+
+
+//------------
+[HttpPost("send-phone-verification")]
+public async Task<IActionResult> SendPhoneVerificationCode()
+{
+    var user = await _userManager.GetUserAsync(User);
+    if (user == null)
+        return NotFound();
+
+    // Generate phone number confirmation token
+    var token = await _userManager.GenerateChangePhoneNumberTokenAsync(
+        user, user.PhoneNumber);
+
+    // Send via SMS (using Twilio, Azure Communication Services, etc.)
+    await _smsService.SendSmsAsync(user.PhoneNumber, 
+        $"Your verification code is: {token}");
+
+    return Ok(new { message = "Verification code sent" });
+}
+
+
+//--------------------- verify
+
+[HttpPost("verify-phone")]
+public async Task<IActionResult> VerifyPhoneNumber([FromBody] VerifyPhoneDto dto)
+{
+    var user = await _userManager.GetUserAsync(User);
+    if (user == null)
+        return NotFound();
+
+    var isTokenValid = await _userManager.VerifyChangePhoneNumberTokenAsync(
+        user, dto.Token, user.PhoneNumber);
+
+    if (!isTokenValid)
+        return BadRequest("Invalid verification code");
+
+    user.PhoneNumberConfirmed = true;
+    await _userManager.UpdateAsync(user);
+
+    return Ok(new { message = "Phone number verified successfully" });
+}
